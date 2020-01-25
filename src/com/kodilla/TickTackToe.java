@@ -15,19 +15,20 @@ import javafx.scene.paint.Color;
 public class TickTackToe extends Application{
 
     private Image imageback = new Image("file:resources/tic-tac-toe-pattern-background.jpg");
-    private Image board = new Image("file:resource/tic-tac-toe-board-empty.jpg");
-    private Image circle1 = new Image("file:resource/circle1.jpg");
-    private Image circle2 = new Image("file:resource/circle2.jpg");
-    private Image circle3 = new Image("file:resource/circle3.jpg");
-    private Image circle4 = new Image("file:resource/circle4.jpg");
-    private Image circle5 = new Image("file:resource/circle5.jpg");
-    private Image cross1 = new Image("file:resource/cross1.jpg");
-    private Image cross2 = new Image("file:resource/cross2.jpg");
-    private Image cross3 = new Image("file:resource/cross3.jpg");
-    private Image cross4 = new Image("file:resource/cross4.jpg");
-    private FlowPane boards = new FlowPane(Orientation.HORIZONTAL);
-    private FlowPane circles = new FlowPane(Orientation.HORIZONTAL);
-    private FlowPane crosses = new FlowPane(Orientation.HORIZONTAL);
+    private Image circle1 = new Image("file:resources/circle1.jpg");
+    private Image circle2 = new Image("file:resources/circle2.jpg");
+    private Image circle3 = new Image("file:resources/circle3.jpg");
+    private Image circle4 = new Image("file:resources/circle4.jpg");
+    private Image circle5 = new Image("file:resources/circle5.jpg");
+    private Image cross1 = new Image("file:resources/cross1.jpg");
+    private Image cross2 = new Image("file:resources/cross2.jpg");
+    private Image cross3 = new Image("file:resources/cross3.jpg");
+    private Image cross4 = new Image("file:resources/cross4.jpg");
+
+    private FlowPane mark1 = new FlowPane(Orientation.HORIZONTAL);
+    private FlowPane mark2 = new FlowPane(Orientation.HORIZONTAL);
+    private FlowPane mark3 = new FlowPane(Orientation.HORIZONTAL);
+    private FlowPane mark4 = new FlowPane(Orientation.HORIZONTAL);
 
 
     public static void main(String[] args) {
@@ -44,23 +45,29 @@ public class TickTackToe extends Application{
 
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
-        grid.setPadding(new Insets(10, 10, 10, 10));
+        grid.setPadding(new Insets(10, 500, 10, 500));
         grid.setHgap(20);
-        grid.setVgap(0);
+        grid.setVgap(20);
         grid.setBackground(background);
 
-        ImageView imgBoard = new ImageView(board);
-        boards.getChildren().add(imgBoard);
+
         ImageView imgCross = new ImageView(cross1);
-        crosses.getChildren().add(imgCross);
-        ImageView imgCircle = new ImageView(circle2);
-        circles.getChildren().add(imgCircle);
+        mark1.getChildren().add(imgCross);
+        ImageView imgCircle = new ImageView(circle1);
+        mark2.getChildren().add(imgCircle);
+        ImageView imgCross2 = new ImageView(cross2);
+        mark3.getChildren().add(imgCross2);
+        ImageView imgCircle2 = new ImageView(circle2);
+        mark4.getChildren().add(imgCircle2);
 
 
-        grid.add(boards, 0, 0, 1, 1);
-        grid.add(crosses, 0, 0, 3, 3);
-        grid.add(circles, 2, 2, 2, 2);
 
+
+
+        grid.add(mark1, 1, 1);
+        grid.add(mark2, 3, 3);
+        grid.add(mark3, 2, 2);
+        grid.add(mark4, 2, 3);
 
 
 
