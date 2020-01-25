@@ -8,12 +8,14 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 
 
 public class TickTackToe extends Application{
 
+//    private Image board = new Image("file:resources/tic-tac-toe-board-empty.jpg");
     private Image imageback = new Image("file:resources/tic-tac-toe-pattern-background.jpg");
     private Image circle1 = new Image("file:resources/circle1.jpg");
     private Image circle2 = new Image("file:resources/circle2.jpg");
@@ -25,6 +27,7 @@ public class TickTackToe extends Application{
     private Image cross3 = new Image("file:resources/cross3.jpg");
     private Image cross4 = new Image("file:resources/cross4.jpg");
 
+//    private FlowPane boards = new FlowPane(Orientation.HORIZONTAL);
     private FlowPane mark1 = new FlowPane(Orientation.HORIZONTAL);
     private FlowPane mark2 = new FlowPane(Orientation.HORIZONTAL);
     private FlowPane mark3 = new FlowPane(Orientation.HORIZONTAL);
@@ -45,11 +48,14 @@ public class TickTackToe extends Application{
 
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
-        grid.setPadding(new Insets(10, 500, 10, 500));
+        grid.setPadding(new Insets(10, 550, 10, 550));
         grid.setHgap(20);
         grid.setVgap(20);
         grid.setBackground(background);
 
+//        GridPane gridBoard = new GridPane();
+//        ImageView imgBoard = new ImageView(board);
+//        boards.getChildren().add(imgBoard);
 
         ImageView imgCross = new ImageView(cross1);
         mark1.getChildren().add(imgCross);
@@ -60,18 +66,19 @@ public class TickTackToe extends Application{
         ImageView imgCircle2 = new ImageView(circle2);
         mark4.getChildren().add(imgCircle2);
 
+        Line line1 = new Line();
+        line1.setStartX(100.0);
+        line1.setStartY(400.0);
+        line1.setEndX(500.0);
+        line1.setEndY(400.0);
 
 
-
-
-        grid.add(mark1, 1, 1);
-        grid.add(mark2, 3, 3);
-        grid.add(mark3, 2, 2);
-        grid.add(mark4, 2, 3);
-
-
-
+        grid.add(mark1, 0, 0);
+        grid.add(mark2, 1, 1);
+        grid.add(mark3, 1, 2);
+        grid.add(mark4, 2, 2);
         Scene scene = new Scene(grid, 1600, 900, Color.BLACK);
+
 
         primaryStage.setTitle("TickTackToe");
         primaryStage.setScene(scene);
