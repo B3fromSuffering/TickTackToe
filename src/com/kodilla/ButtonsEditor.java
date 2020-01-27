@@ -11,11 +11,20 @@ public class ButtonsEditor{
     public static Button newEmptyButton() {
 
         Image empty = new Image("file:resources/empty.jpg");
-        Button emptyButton = new Button();
         ImageView imgbutton = new ImageView(empty);
-        emptyButton.setGraphic(imgbutton);
+        Button button = new Button();
+        button.setGraphic(imgbutton);
 
-        return emptyButton;
+        return button;
+    }
+
+    public static Button emptyButton(Button button) {
+
+        Image empty = new Image("file:resources/empty.jpg");
+        ImageView imgbutton = new ImageView(empty);
+        button.setGraphic(imgbutton);
+
+        return button;
     }
 
     public static void makeMarkCircle(Button button, Circle circle){

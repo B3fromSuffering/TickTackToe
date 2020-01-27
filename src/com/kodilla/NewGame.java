@@ -14,7 +14,9 @@ public class NewGame {
         return list;
     }
 
-    public ButtonsList getButton() {
-        return buttonsList;
+    public void makeButtonsEmpty(){
+
     }
+
+
 }
