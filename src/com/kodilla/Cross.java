@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 public class Cross {
 
 
-    private Image cross = new Image("file:resource/cross1.jpg");
+    private Image cross = new Image("file:resources/cross1.jpg");
 
 
     public ImageView viewCross(){

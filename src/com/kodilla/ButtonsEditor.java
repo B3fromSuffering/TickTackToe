@@ -4,9 +4,23 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+
+import javax.swing.border.LineBorder;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ButtonsEditor{
 
-    private Image empty = new Image("file:resources/empty.jpg");
+    public static List<Button> buttonList = new ArrayList<>(getButtons());
+
+    public static List<Button> getButtons() {
+        List<Button> buttons = new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            buttons.add(ButtonsEditor.newEmptyButton());
+        }
+        return buttons;
+    }
 
     public static Button newEmptyButton() {
 
@@ -14,6 +28,7 @@ public class ButtonsEditor{
         ImageView imgbutton = new ImageView(empty);
         Button button = new Button();
         button.setGraphic(imgbutton);
+
 
         return button;
     }
@@ -41,8 +56,5 @@ public class ButtonsEditor{
 
     }
 
-/*    public void newTurn(Button button) {
-        ImageView imgbutton = Mark.makeMark();
-        button.setGraphic(imgbutton);
-    }*/
+
 }

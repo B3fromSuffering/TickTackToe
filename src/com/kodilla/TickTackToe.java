@@ -16,15 +16,42 @@ import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static com.kodilla.ButtonsEditor.buttonList;
+import static com.kodilla.MenuButtons.createButton;
+import static com.kodilla.MenuButtons.createNewGameButton;
 
 
 public class TickTackToe extends Application{
 
-//    private Image board = new Image("file:resources/tic-tac-toe-board-empty.jpg");
     private Image imageback = new Image("file:resources/tic-tac-toe-pattern-background.jpg");
     private Label score = new Label();
-    private Image empty = new Image("file:resources/empty.jpg");
+
+    public static boolean isSomeoneWin(List<Button> activeButtons){
+
+        if(activeButtons.size() < 5) {
+            for (int i = 0; i < 9; i = i + 3){
+                if (buttonList.get(i).getStyle().equals(buttonList.get(i + 1).getStyle()) && buttonList.get(i + 1).getStyle().equals(buttonList.get(i + 2).getStyle())
+                && buttonList.get(i).isDisable() && buttonList.get(i + 1).isDisable() && buttonList.get(i + 2).isDisable()) {
+                    buttonList.get(i).setStyle("-fx-border-color: #ff0000; -fx-border-width: 5px;");
+                    buttonList.get(i + 1).setStyle("-fx-border-color: #ff0000; -fx-border-width: 5px;");
+                    buttonList.get(i + 2).setStyle("-fx-border-color: #ff0000; -fx-border-width: 5px;");
+                }
+            }
+            for (int i = 0; i < 3; i = i + 1){
+                if (buttonList.get(i).getStyle().equals(buttonList.get(i + 3).getStyle()) && buttonList.get(i + 3).getStyle().equals(buttonList.get(i + 6).getStyle())
+                        && buttonList.get(i).isDisable() && buttonList.get(i + 3).isDisable() && buttonList.get(i + 6).isDisable()) {
+                    buttonList.get(i).setStyle("-fx-border-color: #ff0000; -fx-border-width: 5px;");
+                    buttonList.get(i + 3).setStyle("-fx-border-color: #ff0000; -fx-border-width: 5px;");
+                    buttonList.get(i + 6).setStyle("-fx-border-color: #ff0000; -fx-border-width: 5px;");
+                }
+            }
+        }
+        return true;
+    }
 
     public static void main(String[] args) {
 
@@ -34,132 +61,20 @@ public class TickTackToe extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage backgroundImage = new BackgroundImage(imageback, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         Background background = new Background(backgroundImage);
 
-        ImageView imgbutton1 = new ImageView(empty);
-        ImageView imgbutton2 = new ImageView(empty);
-        ImageView imgbutton3 = new ImageView(empty);
-        ImageView imgbutton4 = new ImageView(empty);
-        ImageView imgbutton5 = new ImageView(empty);
-        ImageView imgbutton6 = new ImageView(empty);
-        ImageView imgbutton7 = new ImageView(empty);
-        ImageView imgbutton8 = new ImageView(empty);
-        ImageView imgbutton9 = new ImageView(empty);
 
-        Button newGame = new Button("new game");
+        //List<Button> buttonsList = ButtonsEditor.getButtons();
+        //List<Button> activeButtonsList = new ArrayList<>(buttonsList);
+        List<Button> activeButtonsList = new ArrayList<>(ButtonsEditor.buttonList);
+
         Button saveResults = new Button("save results");
         Button exit = new Button("exit");
-
-        Button button01 = ButtonsEditor.newEmptyButton();
-        Button button11 = ButtonsEditor.newEmptyButton();
-        Button button21 = ButtonsEditor.newEmptyButton();
-        Button button02 = ButtonsEditor.newEmptyButton();
-        Button button12 = ButtonsEditor.newEmptyButton();
-        Button button22 = ButtonsEditor.newEmptyButton();
-        Button button03 = ButtonsEditor.newEmptyButton();
-        Button button13 = ButtonsEditor.newEmptyButton();
-        Button button23 = ButtonsEditor.newEmptyButton();
-
-        List<Button>  buttonsList = new ArrayList<>();
-
-        buttonsList.add(button01);
-        buttonsList.add(button11);
-        buttonsList.add(button21);
-        buttonsList.add(button02);
-        buttonsList.add(button12);
-        buttonsList.add(button22);
-        buttonsList.add(button03);
-        buttonsList.add(button13);
-        buttonsList.add(button23);
-
-        ComputerMove computerMove = new ComputerMove();
-
-
-
-        newGame.setOnAction((e) -> {
-
-            button01.setGraphic(imgbutton1);
-            button11.setGraphic(imgbutton2);
-            button21.setGraphic(imgbutton3);
-            button02.setGraphic(imgbutton4);
-            button12.setGraphic(imgbutton5);
-            button22.setGraphic(imgbutton6);
-            button03.setGraphic(imgbutton7);
-            button13.setGraphic(imgbutton8);
-            button23.setGraphic(imgbutton9);
-
-            buttonsList.clear();
-            buttonsList.add(button01);
-            buttonsList.add(button11);
-            buttonsList.add(button21);
-            buttonsList.add(button02);
-            buttonsList.add(button12);
-            buttonsList.add(button22);
-            buttonsList.add(button03);
-            buttonsList.add(button13);
-            buttonsList.add(button23);
-
-            button01.setDisable(false);
-
-        });
-
-
-        button01.setOnAction((e) -> {
-            Circle circle = new Circle();
-            ButtonsEditor.makeMarkCircle(button01, circle);
-            button01.setDisable(true);
-            buttonsList.remove(button01);
-
-            computerMove.computer(buttonsList.size());
-
-        });
-
-        button11.setOnAction((e) -> {
-            Circle circle = new Circle();
-            ButtonsEditor.makeMarkCircle(button11, circle);
-        });
-
-        button21.setOnAction((e) -> {
-            Circle circle = new Circle();
-            ButtonsEditor.makeMarkCircle(button21, circle);
-        });
-
-        button02.setOnAction((e) -> {
-            Circle circle = new Circle();
-            ButtonsEditor.makeMarkCircle(button02, circle);
-        });
-
-        button12.setOnAction((e) -> {
-            Circle circle = new Circle();
-            ButtonsEditor.makeMarkCircle(button12, circle);
-        });
-
-        button22.setOnAction((e) -> {
-            Circle circle = new Circle();
-            ButtonsEditor.makeMarkCircle(button22, circle);
-        });
-
-        button03.setOnAction((e) -> {
-            Circle circle = new Circle();
-            ButtonsEditor.makeMarkCircle(button03, circle);
-        });
-
-        button13.setOnAction((e) -> {
-            Circle circle = new Circle();
-            ButtonsEditor.makeMarkCircle(button13, circle);
-        });
-
-        button23.setOnAction((e) -> {
-            Circle circle = new Circle();
-            ButtonsEditor.makeMarkCircle(button23, circle);
-        });
-
-
-
-
-        score.setText("Score");
+        Button newGame = createNewGameButton(activeButtonsList);
+        //Button newGame = createNewGameButton(buttonsList, activeButtonsList);
 
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
@@ -168,30 +83,29 @@ public class TickTackToe extends Application{
         grid.setVgap(20);
         grid.setBackground(background);
 
-
-        grid.add(button01, 0, 1);
-        grid.add(button11, 1, 1);
-        grid.add(button21, 2, 1);
-        grid.add(button02, 0, 2);
-        grid.add(button12, 1, 2);
-        grid.add(button22, 2, 2);
-        grid.add(button03, 0, 3);
-        grid.add(button13, 1, 3);
-        grid.add(button23, 2, 3);
-
+        int x = 0;
+        int y = 1;
+        for (Button b: buttonList) {
+            Button button = createButton(activeButtonsList, b);
+            grid.add(button, x, y);
+            if (x == 2){
+                x = 0;
+                y++;
+            } else {
+                x++;
+            }
+        }
 
         grid.add(newGame, 0, 0);
         grid.add(saveResults, 1, 0);
         grid.add(exit, 2, 0);
         grid.add(score, 0, 4);
-
+        score.setText("Score");
 
         Scene scene = new Scene(grid, 1200, 800, Color.BLACK);
-
 
         primaryStage.setTitle("TickTackToe");
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
 }
