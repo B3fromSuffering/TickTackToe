@@ -20,22 +20,89 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.kodilla.ButtonsEditor.buttonList;
-import static com.kodilla.MenuButtons.createButton;
-import static com.kodilla.MenuButtons.createNewGameButton;
+//import static com.kodilla.ButtonsEditor.buttonList;
+import static com.kodilla.ButtonsEditor.buttonMap;
+import static com.kodilla.MenuButtons.*;
 
 
 public class TickTackToe extends Application{
 
     private Image imageback = new Image("file:resources/tic-tac-toe-pattern-background.jpg");
     private Label score = new Label();
+    static Label console = new Label();
 
-    public static boolean isSomeoneWin(List<Button> activeButtons){
+    public static boolean isSomeoneWin(Map<Integer, Button> activeButtonMap) {
 
-        if(activeButtons.size() < 5) {
+        boolean win = false;        // true true - player win
+        boolean playerWin = false;  // true false - player loose
+
+        if (activeButtonMap.size() < 5) {
+            for (int i = 0; i < 9; i = i + 3) {
+                if (buttonMap.get(i).getStyle().equals(buttonMap.get(i + 1).getStyle()) && buttonMap.get(i + 1).getStyle().equals(buttonMap.get(i + 2).getStyle())
+                        && buttonMap.get(i).isDisable() && buttonMap.get(i + 1).isDisable() && buttonMap.get(i + 2).isDisable()) {
+
+                    if(buttonMap.get(i).getStyle().equals("-fx-border-width: 1px;")){
+                        playerWin = true;
+                    }
+                    win = true;
+                    buttonMap.get(i).setStyle("-fx-border-color: #ff0000; -fx-border-width: 5px;");
+                    buttonMap.get(i + 1).setStyle("-fx-border-color: #ff0000; -fx-border-width: 5px;");
+                    buttonMap.get(i + 2).setStyle("-fx-border-color: #ff0000; -fx-border-width: 5px;");
+                }
+            }
+            for (int i = 0; i < 3; i = i + 1) {
+                if (buttonMap.get(i).getStyle().equals(buttonMap.get(i + 3).getStyle()) && buttonMap.get(i + 3).getStyle().equals(buttonMap.get(i + 6).getStyle())
+                        && buttonMap.get(i).isDisable() && buttonMap.get(i + 3).isDisable() && buttonMap.get(i + 6).isDisable()) {
+
+                    if(buttonMap.get(i).getStyle().equals("-fx-border-width: 1px;")){
+                        playerWin = true;
+                    }
+                    win = true;
+                    buttonMap.get(i).setStyle("-fx-border-color: #ff0000; -fx-border-width: 5px;");
+                    buttonMap.get(i + 3).setStyle("-fx-border-color: #ff0000; -fx-border-width: 5px;");
+                    buttonMap.get(i + 6).setStyle("-fx-border-color: #ff0000; -fx-border-width: 5px;");
+                }
+            }
+            if (buttonMap.get(0).getStyle().equals(buttonMap.get(4).getStyle()) && buttonMap.get(4).getStyle().equals(buttonMap.get(8).getStyle())
+                    && buttonMap.get(0).isDisable() && buttonMap.get(4).isDisable() && buttonMap.get(8).isDisable()){
+                if(buttonMap.get(0).getStyle().equals("-fx-border-width: 1px;")){
+                    playerWin = true;
+                }
+                win = true;
+                buttonMap.get(0).setStyle("-fx-border-color: #ff0000; -fx-border-width: 5px;");
+                buttonMap.get(4).setStyle("-fx-border-color: #ff0000; -fx-border-width: 5px;");
+                buttonMap.get(8).setStyle("-fx-border-color: #ff0000; -fx-border-width: 5px;");
+            }
+            if (buttonMap.get(2).getStyle().equals(buttonMap.get(4).getStyle()) && buttonMap.get(4).getStyle().equals(buttonMap.get(6).getStyle())
+                    && buttonMap.get(2).isDisable() && buttonMap.get(4).isDisable() && buttonMap.get(6).isDisable()){
+                if(buttonMap.get(2).getStyle().equals("-fx-border-width: 1px;")){
+                    playerWin = true;
+                }
+                win = true;
+                buttonMap.get(2).setStyle("-fx-border-color: #ff0000; -fx-border-width: 5px;");
+                buttonMap.get(4).setStyle("-fx-border-color: #ff0000; -fx-border-width: 5px;");
+                buttonMap.get(6).setStyle("-fx-border-color: #ff0000; -fx-border-width: 5px;");
+            }
+        }
+
+
+        if(win){
+            buttonMap.keySet().forEach(integer ->
+                    buttonMap.get(integer).setDisable(true));
+            if(playerWin){
+                console.setText("YOU WIN");
+            } else {
+                console.setText("YOU LOOSE");
+            }
+
+        }
+        return win;
+    }
+
+      /*  if(activeButtons.size() < 5) {
             for (int i = 0; i < 9; i = i + 3){
                 if (buttonList.get(i).getStyle().equals(buttonList.get(i + 1).getStyle()) && buttonList.get(i + 1).getStyle().equals(buttonList.get(i + 2).getStyle())
-                && buttonList.get(i).isDisable() && buttonList.get(i + 1).isDisable() && buttonList.get(i + 2).isDisable()) {
+                        && buttonList.get(i).isDisable() && buttonList.get(i + 1).isDisable() && buttonList.get(i + 2).isDisable()) {
                     buttonList.get(i).setStyle("-fx-border-color: #ff0000; -fx-border-width: 5px;");
                     buttonList.get(i + 1).setStyle("-fx-border-color: #ff0000; -fx-border-width: 5px;");
                     buttonList.get(i + 2).setStyle("-fx-border-color: #ff0000; -fx-border-width: 5px;");
@@ -50,8 +117,8 @@ public class TickTackToe extends Application{
                 }
             }
         }
-        return true;
-    }
+        return true;*/
+
 
     public static void main(String[] args) {
 
@@ -66,24 +133,42 @@ public class TickTackToe extends Application{
         BackgroundImage backgroundImage = new BackgroundImage(imageback, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         Background background = new Background(backgroundImage);
 
+        Map<Integer, Button> activeButtonMap = new HashMap<>(ButtonsEditor.buttonMap);
 
-        //List<Button> buttonsList = ButtonsEditor.getButtons();
-        //List<Button> activeButtonsList = new ArrayList<>(buttonsList);
-        List<Button> activeButtonsList = new ArrayList<>(ButtonsEditor.buttonList);
+
+        Button saveResults = saveResults();
+        Button exit = createExit();
+        Button newGame = createNewGameButton(activeButtonMap);
+
+        /*List<Button> activeButtonsList = new ArrayList<>(ButtonsEditor.buttonList);
+
 
         Button saveResults = new Button("save results");
         Button exit = new Button("exit");
-        Button newGame = createNewGameButton(activeButtonsList);
-        //Button newGame = createNewGameButton(buttonsList, activeButtonsList);
+        Button newGame = createNewGameButton(activeButtonsList);*/
+
 
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
-        grid.setPadding(new Insets(10, 550, 10, 550));
+        grid.setPadding(new Insets(50, 550, 10, 510));
         grid.setHgap(20);
         grid.setVgap(20);
         grid.setBackground(background);
 
         int x = 0;
+        int y = 1;
+        for (Integer b: activeButtonMap.keySet()) {
+            Button button = createButton(activeButtonMap, b);
+            grid.add(button, x, y);
+            if (x == 2){
+                x = 0;
+                y++;
+            } else {
+                x++;
+            }
+        }
+
+        /*int x = 0;
         int y = 1;
         for (Button b: buttonList) {
             Button button = createButton(activeButtonsList, b);
@@ -94,13 +179,17 @@ public class TickTackToe extends Application{
             } else {
                 x++;
             }
-        }
+        }*/
 
         grid.add(newGame, 0, 0);
         grid.add(saveResults, 1, 0);
         grid.add(exit, 2, 0);
-        grid.add(score, 0, 4);
-        score.setText("Score");
+        grid.add(console, 0, 4);
+        grid.add(score, 2, 4);
+
+        console.setStyle("-fx-font-size: 20; -fx-background-color: #fff669; ");
+        score.setStyle("-fx-font-size: 20; -fx-background-color: #fff669");
+        score.setText("Score: " + 0);
 
         Scene scene = new Scene(grid, 1200, 800, Color.BLACK);
 

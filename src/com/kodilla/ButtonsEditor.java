@@ -5,14 +5,27 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 
-import javax.swing.border.LineBorder;
-import java.awt.*;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ButtonsEditor{
 
-    public static List<Button> buttonList = new ArrayList<>(getButtons());
+    public static Map<Integer, Button> buttonMap = new HashMap<>(getButtons());
+
+    public static Map<Integer, Button> getButtons() {
+        Map<Integer, Button> buttons = new HashMap<>();
+        for (int i = 0; i < 9; i++) {
+            buttons.put(i, ButtonsEditor.newEmptyButton());
+        }
+        return buttons;
+    }
+
+
+
+/*    public static List<Button> buttonList = new ArrayList<>(getButtons());
 
     public static List<Button> getButtons() {
         List<Button> buttons = new ArrayList<>();
@@ -20,7 +33,7 @@ public class ButtonsEditor{
             buttons.add(ButtonsEditor.newEmptyButton());
         }
         return buttons;
-    }
+    }*/
 
     public static Button newEmptyButton() {
 
