@@ -64,7 +64,7 @@ public class MenuButtons {
 
             activeButtonMap.remove(key);
 
-            if(!TickTackToe.isSomeoneWin(activeButtonMap)){
+            if(!TickTackToe.isSomeoneWin(activeButtonMap) && activeButtonMap.size() > 0){
                 ComputerMove computerMove = new ComputerMove();
                 computerMove.computer(activeButtonMap);
                 TickTackToe.isSomeoneWin(activeButtonMap);

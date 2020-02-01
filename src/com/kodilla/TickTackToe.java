@@ -28,8 +28,9 @@ import static com.kodilla.MenuButtons.*;
 public class TickTackToe extends Application{
 
     private Image imageback = new Image("file:resources/tic-tac-toe-pattern-background.jpg");
-    private Label score = new Label();
+    static Label score = new Label();
     static Label console = new Label();
+    static int scores = 0;
 
     public static boolean isSomeoneWin(Map<Integer, Button> activeButtonMap) {
 
@@ -91,8 +92,12 @@ public class TickTackToe extends Application{
                     buttonMap.get(integer).setDisable(true));
             if(playerWin){
                 console.setText("YOU WIN");
+                scores += 10;
+                score.setText("Score: " + scores);
             } else {
                 console.setText("YOU LOOSE");
+                scores -= 10;
+                score.setText("Score: " + scores);
             }
 
         }
@@ -189,7 +194,7 @@ public class TickTackToe extends Application{
 
         console.setStyle("-fx-font-size: 20; -fx-background-color: #fff669; ");
         score.setStyle("-fx-font-size: 20; -fx-background-color: #fff669");
-        score.setText("Score: " + 0);
+        score.setText("Score: " + scores);
 
         Scene scene = new Scene(grid, 1200, 800, Color.BLACK);
 
