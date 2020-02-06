@@ -8,85 +8,84 @@ import java.util.Map;
 import java.util.Random;
 
 import static com.kodilla.ButtonsEditor.buttonMap;
+import static com.kodilla.TickTackToe.gameDifficulty;
 
 public class ComputerMove {
 
-    public boolean move1(Map<Integer, Button> activeButtonMap){
-        Cross cross = new Cross();
+    public boolean move1(Map<Integer, Button> activeButtonMap) {
         Random random = new Random();
         boolean end = false;
         int key = 0;
 
-        if(buttonMap.get(0).isDisable()){
-            key = 8;
-            end = true;
-        }
-        if(!end && buttonMap.get(2).isDisable()){
-            key = 6;
-            end = true;
-        }
-        if(!end && buttonMap.get(6).isDisable()){
-            key = 2;
-            end = true;
-        }
-        if(!end && buttonMap.get(8).isDisable()){
-            key = 0;
+        if(!buttonMap.get(4).isDisable()){
+            key = 4;
             end = true;
         }
         while(!end){
             key = 2 * random.nextInt(5);
-            if(!buttonMap.get(key).isDisable()){
+            if(!buttonMap.get(key).isDisable()) {
                 end = true;
             }
         }
-
-        ButtonsEditor.makeMarkCross(activeButtonMap.get(key), cross);
-        activeButtonMap.get(key).setStyle("-fx-border-width: 2px;");
-        activeButtonMap.get(key).setDisable(true);
-        activeButtonMap.remove(key);
-        return true;
+        return ComputerMark(activeButtonMap, end, key);
     }
 
-    public boolean move2(Map<Integer, Button> activeButtonMap,String mark){
-        Cross cross = new Cross();
+    public boolean move2(Map<Integer, Button> activeButtonMap) {
+        Random random = new Random();
+        boolean end = false;
+        int key = 0;
+
+        if (buttonMap.get(0).getStyle().equals(buttonMap.get(8).getStyle()) && buttonMap.get(0).getStyle().equals("-fx-border-width: 1px;")){
+            while(!end) {
+                key = 1 + 2 * random.nextInt(4);
+                if (!buttonMap.get(key).isDisable()) {
+                    end = true;
+                }
+            }
+        }
+        if (!end && buttonMap.get(2).getStyle().equals(buttonMap.get(6).getStyle()) && buttonMap.get(2).getStyle().equals("-fx-border-width: 1px;")){
+            while(!end) {
+                key = 1 + 2 * random.nextInt(4);
+                if (!buttonMap.get(key).isDisable()) {
+                    end = true;
+                }
+            }
+        }
+        if(!end && ((buttonMap.get(0).isDisable() && buttonMap.get(4).isDisable() && buttonMap.get(8).isDisable()) || (buttonMap.get(2).isDisable() && buttonMap.get(4).isDisable() && buttonMap.get(6).isDisable()))){
+            while(!end){
+                key = 2 * random.nextInt(5);
+                if(!buttonMap.get(key).isDisable()){
+                    end = true;
+                }
+            }
+        }
+        return ComputerMark(activeButtonMap, end, key);
+    }
+
+    public boolean move3(Map<Integer, Button> activeButtonMap,String mark){
         boolean end = false;
         int key = 0;
 
         if(!end && buttonMap.get(0).getStyle().equals(buttonMap.get(4).getStyle()) && buttonMap.get(0).getStyle().equals(mark) && !buttonMap.get(8).isDisable()) {
-            ButtonsEditor.makeMarkCross(activeButtonMap.get(8), cross);
             key = 8;
             end = true;
         }
         if(!end && buttonMap.get(2).getStyle().equals(buttonMap.get(4).getStyle()) && buttonMap.get(2).getStyle().equals(mark) && !buttonMap.get(6).isDisable()) {
-            ButtonsEditor.makeMarkCross(activeButtonMap.get(6), cross);
             key = 6;
             end = true;
         }
         if(!end && buttonMap.get(6).getStyle().equals(buttonMap.get(4).getStyle()) && buttonMap.get(6).getStyle().equals(mark) && !buttonMap.get(2).isDisable()) {
-            ButtonsEditor.makeMarkCross(activeButtonMap.get(2), cross);
             key = 2;
             end = true;
         }
         if(!end && buttonMap.get(8).getStyle().equals(buttonMap.get(4).getStyle()) && buttonMap.get(8).getStyle().equals(mark) && !buttonMap.get(0).isDisable()) {
-            ButtonsEditor.makeMarkCross(activeButtonMap.get(0), cross);
             key = 0;
-            end = true;
-        }
-        if(!end && buttonMap.get(1).getStyle().equals(buttonMap.get(7).getStyle()) && buttonMap.get(1).getStyle().equals(mark) && !buttonMap.get(4).isDisable()) {
-            ButtonsEditor.makeMarkCross(activeButtonMap.get(4), cross);
-            key = 4;
-            end = true;
-        }
-        if(!end && buttonMap.get(3).getStyle().equals(buttonMap.get(5).getStyle()) && buttonMap.get(3).getStyle().equals(mark) && !buttonMap.get(4).isDisable()) {
-            ButtonsEditor.makeMarkCross(activeButtonMap.get(4), cross);
-            key = 4;
             end = true;
         }
         if(!end) {
             for (int i = 0; i < 9; i += 2) {
                 for (int j = 0; j < 9; j += 2) {
-                    if (!end && i != 4 && i != j && buttonMap.get(i).getStyle().equals(buttonMap.get(j).getStyle()) && buttonMap.get(i).getStyle().equals(mark) && !buttonMap.get((i + j) / 2).isDisable()) {
-                        ButtonsEditor.makeMarkCross(activeButtonMap.get((i + j) / 2), cross);
+                    if (!end && j!= 4 && i != 4 && i != j && buttonMap.get(i).getStyle().equals(buttonMap.get(j).getStyle()) && buttonMap.get(i).getStyle().equals(mark) && !buttonMap.get((i + j) / 2).isDisable()) {
                         key = (i + j) / 2;
                         end = true;
                     }
@@ -96,7 +95,6 @@ public class ComputerMove {
         if(!end) {
             for (int i = 0; i < 7; i += 3) {
                 if (!end && buttonMap.get(i).getStyle().equals(buttonMap.get(i + 1).getStyle()) && buttonMap.get(i).getStyle().equals(mark) && !buttonMap.get(i + 2).isDisable()) {
-                    ButtonsEditor.makeMarkCross(activeButtonMap.get(i + 2), cross);
                     key = i + 2;
                     end = true;
                 }
@@ -105,7 +103,6 @@ public class ComputerMove {
         if(!end) {
             for (int i = 1; i < 9; i = i + 3) {
                 if (!end && buttonMap.get(i).getStyle().equals(buttonMap.get(i + 1).getStyle()) && buttonMap.get(i).getStyle().equals(mark) && !buttonMap.get(i - 1).isDisable()) {
-                    ButtonsEditor.makeMarkCross(activeButtonMap.get(i - 1), cross);
                     key = i - 1;
                     end = true;
                 }
@@ -115,13 +112,16 @@ public class ComputerMove {
             for (int i = 0; i < 6; i += 1) {
                 if (!end && buttonMap.get(i).getStyle().equals(buttonMap.get(i + 3).getStyle()) && buttonMap.get(i).getStyle().equals(mark) && !buttonMap.get((i + 6) % 9).isDisable()) {
                     key = (i + 6) % 9;
-                    ButtonsEditor.makeMarkCross(activeButtonMap.get(key), cross);
                     end = true;
                 }
             }
         }
+        return ComputerMark(activeButtonMap, end, key);
+    }
 
+    public boolean ComputerMark(Map<Integer, Button> activeButtonMap, boolean end, int key) {
         if(end) {
+            ButtonsEditor.makeMarkCross(activeButtonMap.get(key));
             activeButtonMap.get(key).setStyle("-fx-border-width: 2px;");
             activeButtonMap.get(key).setDisable(true);
             activeButtonMap.remove(key);
@@ -130,58 +130,55 @@ public class ComputerMove {
             return false;
         }
     }
+
     public boolean moveRandom(Map<Integer, Button> activeButtonMap){
-        Cross cross = new Cross();
         Random random = new Random();
-        boolean end = false;
-        int key = 0;
-        int indexKey;
+        int keyIndex;
+        int key;
 
-        indexKey = random.nextInt(activeButtonMap.size());
-        activeButtonMap.entrySet().
+        List<Integer> keysList = new ArrayList<>(activeButtonMap.keySet());
+        keyIndex = random.nextInt(keysList.size());
+        key = keysList.get(keyIndex);
 
-
-
+        ButtonsEditor.makeMarkCross(activeButtonMap.get(key));
+        activeButtonMap.get(key).setStyle("-fx-border-width: 2px;");
+        activeButtonMap.get(key).setDisable(true);
+        activeButtonMap.remove(key);
         return true;
     }
 
     public void computer(Map<Integer, Button> activeButtonMap){
 
-        Random random = new Random();
-        Cross cross = new Cross();
-
-        int keyIndex;
-        int key = 0;
-        boolean end = false;
-
         String playerMark = "-fx-border-width: 1px;";
         String computerMark = "-fx-border-width: 2px;";
 
-        //difficulty
-        // first move
-        if (activeButtonMap.size() == 8) {
-            move1(activeButtonMap);
-        }
+        if (gameDifficulty == true) {
 
-        //second move
-        if (activeButtonMap.size() == 6) {
-            boolean didComputerMove = move2(activeButtonMap, playerMark);
-            if(!didComputerMove){
+            if (activeButtonMap.size() == 8) {
                 move1(activeButtonMap);
             }
-        }
 
-        //third move
-        if (activeButtonMap.size() <= 4) {
-            boolean didComputerMove = move2(activeButtonMap, computerMark);
-            if(!didComputerMove){
-                didComputerMove = move2(activeButtonMap, playerMark);
+            if (activeButtonMap.size() == 6) {
+                boolean didComputerMove = move2(activeButtonMap);
+                if (!didComputerMove) {
+                    didComputerMove = move3(activeButtonMap, playerMark);
+                }
+                if (!didComputerMove) {
+                    moveRandom(activeButtonMap);
+                }
             }
-            if (!didComputerMove) {
-                move1(activeButtonMap);
+
+            if (activeButtonMap.size() <= 4) {
+                boolean didComputerMove = move3(activeButtonMap, computerMark);
+                if (!didComputerMove) {
+                    didComputerMove = move3(activeButtonMap, playerMark);
+                }
+                if (!didComputerMove) {
+                    moveRandom(activeButtonMap);
+                }
             }
+        } else {
+            moveRandom(activeButtonMap);
         }
-
-
     }
 }

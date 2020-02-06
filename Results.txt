@@ -1,0 +1,7 @@
+hard: true; score: -40; games: 4
+hard: true; score: -30; games: 3
+hard: true; score: -50; games: 5
+hard: false; score: 40; games: 3
+hard: true; score: -10; games: 1
+hard: true; score: 60; games: 9
+hard: true; score: 100; games: 16
